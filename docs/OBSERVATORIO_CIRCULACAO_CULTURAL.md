@@ -1,6 +1,10 @@
 # Observatório de Circulação Cultural
 
-Projeto derivado de `dizzyx/daily-social-report` para investigar quais filmes, livros, músicas e temas circulam mais nas plataformas externas e quais formas de circulação produzem diálogo.
+Projeto derivado de `dizzyx/daily-social-report` para investigar a circulação externa de cinco eixos permanentes: **plantas, filmes, livros, música e contos**. Filtros específicos — uma obra, cena, artista ou termo — entram apenas como consultas temporárias.
+
+## Eixos permanentes
+
+As categorias do observatório não mudam conforme o exemplo do mês. Elas permanecem: plantas, filmes, livros, música e contos. O sistema pode abrir uma consulta focal dentro de qualquer eixo, mas não transforma o filtro em nova categoria.
 
 ## Pergunta principal
 
@@ -50,7 +54,7 @@ Nunca usar apenas o título da obra ou o texto da legenda como chave.
   "captured_at": "2026-11-08T03:00:00Z",
   "capture_method": "official_api",
   "obra_ids": ["filme-matraga"],
-  "theme_labels": ["plantas", "memória", "território"],
+  "theme_labels": ["plantas"],
   "content": {
     "text": "...",
     "transcript": "...",
@@ -100,15 +104,16 @@ Os denominadores devem ser preservados. Alcance, visualizações, impressões e 
 
 Cada consulta pode ser executada em três níveis:
 
-- `broad`: tema amplo, como `plantas`, `memória popular` ou `cinema brasileiro`;
-- `focused`: obra, personagem, cena ou termo específico, como `Matraga`, `mulungu` ou `Sinners`;
+- `broad`: um dos cinco eixos permanentes: `plantas`, `filmes`, `livros`, `música` ou `contos`;
+- `focused`: obra, personagem, cena ou termo específico dentro de um eixo, como `Matraga`, `mulungu` ou `Sinners`;
 - `comparative`: vários termos ou obras comparados na mesma janela.
 
 Para cada consulta, gerar Top 5, Top 10 e Top 20 por circulação. A mesma consulta pode cruzar Threads com Google Trends, sem misturar os valores: Threads mede interação social observada; Google Trends mede interesse agregado de busca.
 
 O cruzamento mínimo é:
 
-- pico de visualizações no Threads;
+- réplicas/reposts no Threads;
+- compartilhamentos e curtidas;
 - pico de respostas e compartilhamentos;
 - comprimento médio e profundidade das respostas;
 - velocidade de crescimento;
@@ -121,16 +126,18 @@ Google Trends entra como contexto externo. A API oficial está em acesso alfa; e
 
 O ranking deve ser apresentado como sinal analítico, não como verdade causal.
 
+A primeira pontuação prioriza circulação efetiva: réplicas/reposts vêm primeiro; compartilhamentos e curtidas continuam obrigatórios; respostas longas medem qualidade dialógica.
+
 Uma primeira pontuação pode ser:
 
 ```text
 circulation_score =
-  0.20 * normalized_replication_rate
-+ 0.20 * normalized_share_rate
+  0.30 * normalized_repost_rate
++ 0.25 * normalized_share_rate
++ 0.15 * normalized_like_rate
 + 0.15 * normalized_reply_rate
-+ 0.15 * normalized_mean_reply_length
-+ 0.15 * normalized_growth_velocity
-+ 0.15 * normalized_cross_platform_spread
++ 0.10 * normalized_mean_reply_length
++ 0.05 * normalized_growth_velocity
 ```
 
 A pontuação deve mostrar também:
@@ -141,6 +148,10 @@ A pontuação deve mostrar também:
 - método de captura;
 - campos ausentes;
 - intervalo de confiança ou grau de incerteza.
+
+## Entrega por WhatsApp via GOWA
+
+Os relatórios podem ser enviados ao número autorizado pelo adaptador OCI do `gowa-cloudflare-openai`. O alvo e o token ficam somente no ambiente privado da VM; o observatório envia apenas o texto do relatório por uma rota autenticada. O relatório deve destacar primeiro réplicas/reposts, depois compartilhamentos, curtidas e respostas.
 
 ## Modelo mínimo de dados
 
