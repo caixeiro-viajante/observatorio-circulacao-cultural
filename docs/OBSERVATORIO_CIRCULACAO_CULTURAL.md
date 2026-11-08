@@ -165,13 +165,12 @@ Entidades principais:
 5. integrar Google Trends como série contextual;
 6. preservar método, timestamp e campos ausentes;
 7. manter uma saída unificada para todos os conectores;
-8. 
-9. acrescentar `platform_post_id`, `obra_ids`, `theme_labels` e `captured_at`;
-10. armazenar snapshots em vez de sobrescrever métricas;
-11. implementar ranking por obra e por tema;
-12. separar métricas públicas de métricas disponíveis apenas para contas autorizadas;
-13. criar uma tela de comparação por plataforma;
-14. incluir evidência textual das respostas mais longas e representativas.
+8. acrescentar `platform_post_id`, `obra_ids`, `theme_labels` e `captured_at`;
+9. armazenar snapshots em vez de sobrescrever métricas;
+10. implementar ranking por obra e por tema;
+11. separar métricas públicas de métricas disponíveis apenas para contas autorizadas;
+12. criar uma tela de comparação por plataforma;
+13. incluir evidência textual das respostas mais longas e representativas.
 
 ## Limite metodológico
 
