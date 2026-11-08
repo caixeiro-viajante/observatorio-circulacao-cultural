@@ -1,8 +1,8 @@
-# Livedashboard
+# Observatório de Circulação Cultural
 
-> A universal social media analytics dashboard with **automated daily reporting** across X, YouTube, LinkedIn, Instagram, and TikTok — open-source and brandable for your business.
+> A research-oriented dashboard for observing the circulation of films, books, music and themes across external platforms, with daily reporting across X, YouTube, LinkedIn, Instagram and TikTok.
 
-Built with Next.js 15, TypeScript, Tailwind CSS, and Recharts. Self-hostable on Vercel in a few clicks.
+Built with Next.js 15, TypeScript, Tailwind CSS, and Recharts. The initial dashboard is derived from `dizzyx/daily-social-report`; the research specification is in [`docs/OBSERVATORIO_CIRCULACAO_CULTURAL.md`](docs/OBSERVATORIO_CIRCULACAO_CULTURAL.md).
 
 ---
 
