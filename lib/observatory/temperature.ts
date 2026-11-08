@@ -1,5 +1,8 @@
 import type { ContentItem } from '@/lib/adapters/types'
 
+export const PERMANENT_THEMES = ['plants', 'films', 'books', 'music', 'stories'] as const
+export type PermanentTheme = typeof PERMANENT_THEMES[number]
+
 export type TemperatureScope = 'broad' | 'focused'
 export type TopWindow = 5 | 10 | 20
 
