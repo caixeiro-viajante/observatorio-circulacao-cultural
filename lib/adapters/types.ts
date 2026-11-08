@@ -1,4 +1,4 @@
-export type PlatformId = 'x' | 'youtube' | 'linkedin' | 'instagram' | 'tiktok'
+export type PlatformId = 'x' | 'youtube' | 'linkedin' | 'instagram' | 'tiktok' | 'threads'
 
 export interface PlatformMeta {
   id: PlatformId
@@ -17,6 +17,9 @@ export interface OverviewMetrics {
   impressions: number
   engagement: number
   posts: number
+  replies?: number
+  shares?: number
+  reposts?: number
 }
 
 export interface TimeSeriesPoint {
@@ -24,6 +27,10 @@ export interface TimeSeriesPoint {
   followers: number
   impressions: number
   engagement: number
+  replies?: number
+  shares?: number
+  reposts?: number
+  searchInterest?: number
 }
 
 export interface ContentItem {
@@ -34,6 +41,11 @@ export interface ContentItem {
   impressions: number
   engagement: number
   engagementRate: number
+  obraIds?: string[]
+  themeIds?: string[]
+  responseCount?: number
+  meanResponseLength?: number
+  growthVelocity?: number
 }
 
 export interface PlatformAdapter {
@@ -70,6 +82,11 @@ export const PLATFORM_META: Record<PlatformId, PlatformMeta> = {
     name: 'TikTok',
     metricLabel: { primary: 'Views', secondary: 'Shares' },
   },
+  threads: {
+    id: 'threads',
+    name: 'Threads',
+    metricLabel: { primary: 'Views', secondary: 'Replies' },
+  },
 }
 
-export const PLATFORM_IDS: PlatformId[] = ['x', 'youtube', 'linkedin', 'instagram', 'tiktok']
+export const PLATFORM_IDS: PlatformId[] = ['threads', 'x', 'youtube', 'linkedin', 'instagram', 'tiktok']
