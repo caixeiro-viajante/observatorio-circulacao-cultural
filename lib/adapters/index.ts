@@ -4,6 +4,7 @@ import { makeYouTubeAdapter } from './youtube/real'
 import { makeLinkedInAdapter } from './linkedin/real'
 import { makeInstagramAdapter } from './instagram/real'
 import { makeTikTokAdapter } from './tiktok/real'
+import { makeThreadsAdapter } from './threads/real'
 import { PLATFORM_IDS, type PlatformAdapter, type PlatformId } from './types'
 
 const REAL_BUILDERS: Record<PlatformId, () => PlatformAdapter> = {
@@ -12,6 +13,7 @@ const REAL_BUILDERS: Record<PlatformId, () => PlatformAdapter> = {
   linkedin: makeLinkedInAdapter,
   instagram: makeInstagramAdapter,
   tiktok: makeTikTokAdapter,
+  threads: makeThreadsAdapter,
 }
 
 const REAL_CRED_ENV: Record<PlatformId, string> = {
@@ -20,6 +22,7 @@ const REAL_CRED_ENV: Record<PlatformId, string> = {
   linkedin: 'LINKEDIN_ACCESS_TOKEN',
   instagram: 'IG_ACCESS_TOKEN',
   tiktok: 'TIKTOK_ACCESS_TOKEN',
+  threads: 'THREADS_ACCESS_TOKEN',
 }
 
 export function isPlatformConnected(id: PlatformId): boolean {
