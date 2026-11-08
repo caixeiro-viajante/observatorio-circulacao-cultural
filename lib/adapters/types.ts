@@ -46,6 +46,12 @@ export interface ContentItem {
   responseCount?: number
   meanResponseLength?: number
   growthVelocity?: number
+  shares?: number
+  reposts?: number
+  quotes?: number
+  views?: number
+  platformPostId?: string
+  captureMethod?: 'official_api' | 'playwright' | 'import' | 'mock'
 }
 
 export interface PlatformAdapter {
