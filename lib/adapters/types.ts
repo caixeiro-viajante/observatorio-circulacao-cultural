@@ -49,6 +49,7 @@ export interface ContentItem {
   shares?: number
   reposts?: number
   quotes?: number
+  likes?: number
   views?: number
   platformPostId?: string
   captureMethod?: 'official_api' | 'playwright' | 'import' | 'mock'
