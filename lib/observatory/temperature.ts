@@ -25,6 +25,7 @@ export interface TemperatureRow {
   replication: number
   replies: number
   shares: number
+  likes: number
   meanResponseLength: number
   growthVelocity: number
   crossPlatformSpread: number
@@ -43,9 +44,10 @@ function minMax(value: number, min: number, max: number): number {
 export function rankTemperature(items: ContentItem[], top: TopWindow = 10): TemperatureRow[] {
   const rows = items.map((item) => {
     const exposure = Math.max(0, item.impressions)
-    const replication = item.engagement
+    const replication = item.reposts ?? item.quotes ?? 0
     const replies = item.responseCount ?? 0
-    const shares = item.shares ?? item.reposts ?? item.quotes ?? 0
+    const shares = item.shares ?? 0
+    const likes = item.likes ?? 0
     return {
       label: item.title,
       obraIds: item.obraIds ?? [],
@@ -55,6 +57,7 @@ export function rankTemperature(items: ContentItem[], top: TopWindow = 10): Temp
       replication,
       replies,
       shares,
+      likes,
       meanResponseLength: item.meanResponseLength ?? 0,
       growthVelocity: item.growthVelocity ?? 0,
       crossPlatformSpread: 1,
@@ -65,7 +68,7 @@ export function rankTemperature(items: ContentItem[], top: TopWindow = 10): Temp
   const values = (key: keyof TemperatureRow) =>
     rows.map((row) => Number(row[key])).filter(Number.isFinite)
   const ranges = new Map<keyof TemperatureRow, [number, number]>()
-  for (const key of ['replication', 'replies', 'shares', 'meanResponseLength', 'growthVelocity'] as const) {
+  for (const key of ['replication', 'replies', 'shares', 'likes', 'meanResponseLength', 'growthVelocity'] as const) {
     const v = values(key)
     ranges.set(key, [Math.min(...v, 0), Math.max(...v, 0)])
   }
@@ -74,12 +77,14 @@ export function rankTemperature(items: ContentItem[], top: TopWindow = 10): Temp
     const replicationRate = safeRate(row.replication, row.exposure)
     const replyRate = safeRate(row.replies, row.exposure)
     const shareRate = safeRate(row.shares, row.exposure)
+    const likeRate = safeRate(row.likes, row.exposure)
     const score =
-      0.25 * replicationRate +
-      0.20 * replyRate +
-      0.20 * shareRate +
-      0.15 * minMax(row.meanResponseLength, ...ranges.get('meanResponseLength')!) +
-      0.20 * minMax(row.growthVelocity, ...ranges.get('growthVelocity')!)
+      0.30 * replicationRate +
+      0.25 * shareRate +
+      0.15 * likeRate +
+      0.15 * replyRate +
+      0.10 * minMax(row.meanResponseLength, ...ranges.get('meanResponseLength')!) +
+      0.05 * minMax(row.growthVelocity, ...ranges.get('growthVelocity')!)
     row.circulationScore = score
   }
 
