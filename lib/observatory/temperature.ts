@@ -45,7 +45,7 @@ export function rankTemperature(items: ContentItem[], top: TopWindow = 10): Temp
     const exposure = Math.max(0, item.impressions)
     const replication = item.engagement
     const replies = item.responseCount ?? 0
-    const shares = Math.max(0, item.engagement - replies)
+    const shares = item.shares ?? item.reposts ?? item.quotes ?? 0
     return {
       label: item.title,
       obraIds: item.obraIds ?? [],
