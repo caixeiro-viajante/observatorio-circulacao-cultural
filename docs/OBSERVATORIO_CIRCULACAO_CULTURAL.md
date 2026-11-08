@@ -16,6 +16,18 @@ Quais obras e temas:
 
 O sistema não reduz relevância a curtidas. Ele cruza exposição, circulação, resposta e conteúdo discursivo.
 
+## Fonte central de teste: Threads Insights
+
+O primeiro laboratório será o Threads. Cada publicação deve ser consultada pelo identificador da publicação e receber snapshots periódicos de `views`, `likes`, `replies`, `reposts`, `quotes` e `shares`, quando disponíveis para a conta e para o tipo de publicação. O Threads é o eixo inicial porque permite observar circulação e resposta discursiva no mesmo ambiente.
+
+A coleta terá três camadas combináveis:
+
+1. Insights oficiais da conta/publicação autorizada;
+2. leitura da interface autenticada via CATCHER/Playwright, quando o dado estiver visível na sessão;
+3. análise textual das respostas, preservando comprimento, encadeamento, idioma, tema e horário.
+
+A saída das três camadas será uma mesma série de `metric_snapshots`, com `capture_method` e `captured_at` preservados.
+
 ## Fontes externas
 
 - Instagram: Graph API para contas profissionais autorizadas; CATCHER/Playwright para captura observacional autorizada da interface.
@@ -84,6 +96,27 @@ Cada plataforma mantém seus nomes e valores brutos. O observatório também cal
 
 Os denominadores devem ser preservados. Alcance, visualizações, impressões e contas alcançadas não são equivalentes entre plataformas.
 
+## Consultas cruzadas e temperatura
+
+Cada consulta pode ser executada em três níveis:
+
+- `broad`: tema amplo, como `plantas`, `memória popular` ou `cinema brasileiro`;
+- `focused`: obra, personagem, cena ou termo específico, como `Matraga`, `mulungu` ou `Sinners`;
+- `comparative`: vários termos ou obras comparados na mesma janela.
+
+Para cada consulta, gerar Top 5, Top 10 e Top 20 por circulação. A mesma consulta pode cruzar Threads com Google Trends, sem misturar os valores: Threads mede interação social observada; Google Trends mede interesse agregado de busca.
+
+O cruzamento mínimo é:
+
+- pico de visualizações no Threads;
+- pico de respostas e compartilhamentos;
+- comprimento médio e profundidade das respostas;
+- velocidade de crescimento;
+- interesse de busca no Google Trends;
+- defasagem entre o pico social e o pico de busca.
+
+Google Trends entra como contexto externo. A API oficial está em acesso alfa; enquanto o acesso não estiver disponível, usar exportação da interface ou um provedor explicitamente identificado, sem fingir que é a API oficial. A escala do Trends é interesse relativo, não volume absoluto.
+
 ## Potencial de circulação
 
 O ranking deve ser apresentado como sinal analítico, não como verdade causal.
@@ -126,12 +159,19 @@ Entidades principais:
 ## Primeira entrega técnica
 
 1. preservar os adaptadores existentes;
-2. acrescentar `platform_post_id`, `obra_ids`, `theme_labels` e `captured_at`;
-3. armazenar snapshots em vez de sobrescrever métricas;
-4. implementar ranking por obra e por tema;
-5. separar métricas públicas de métricas disponíveis apenas para contas autorizadas;
-6. criar uma tela de comparação por plataforma;
-7. incluir evidência textual das respostas mais longas e representativas.
+2. tratar Threads Insights como primeiro adaptador real;
+3. suportar consultas `broad`, `focused` e `comparative`;
+4. gerar Top 5, Top 10 e Top 20;
+5. integrar Google Trends como série contextual;
+6. preservar método, timestamp e campos ausentes;
+7. manter uma saída unificada para todos os conectores;
+8. 
+9. acrescentar `platform_post_id`, `obra_ids`, `theme_labels` e `captured_at`;
+10. armazenar snapshots em vez de sobrescrever métricas;
+11. implementar ranking por obra e por tema;
+12. separar métricas públicas de métricas disponíveis apenas para contas autorizadas;
+13. criar uma tela de comparação por plataforma;
+14. incluir evidência textual das respostas mais longas e representativas.
 
 ## Limite metodológico
 
